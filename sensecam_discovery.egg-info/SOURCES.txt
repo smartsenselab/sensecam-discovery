@@ -1,0 +1,9 @@
+README.md
+setup.py
+sensecam-discovery/SenseCamDiscovery.py
+sensecam-discovery/__init__.py
+sensecam_discovery.egg-info/PKG-INFO
+sensecam_discovery.egg-info/SOURCES.txt
+sensecam_discovery.egg-info/dependency_links.txt
+sensecam_discovery.egg-info/requires.txt
+sensecam_discovery.egg-info/top_level.txt

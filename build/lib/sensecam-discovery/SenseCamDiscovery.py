@@ -11,7 +11,7 @@ import WSDiscovery
 from onvif import ONVIFCamera
 
 
-def discover(scope = None) -> List:
+def ws_discovery(scope = None) -> List:
     """Discover cameras on network using onvif discovery.
 
     Returns:

@@ -9,7 +9,7 @@ pip install sensecam-discovery
 To execute the command that discover all cameras:
 ````
 from sensecam_discovery import SenseCamDiscovery
-SenseCamDiscovery.ws_discovery()
+SenseCamDiscovery.discover()
 ````
 To execute the comand that shows information about the cameras:
 ````
