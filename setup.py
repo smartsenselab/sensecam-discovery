@@ -2,7 +2,7 @@ import setuptools
 
 REQUIREMENTS = [line for line in open('requirements.txt').read().split('\n') if line != '']
 
-VERSION = '1.0.11'
+VERSION = '1.0.12'
 AUTHOR = 'Ricardo Barbosa Filho (Smart Sense Laboratory)'
 EMAIL = 'ricardob@dcc.ufmg.br'
 
