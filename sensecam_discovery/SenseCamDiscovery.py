@@ -37,6 +37,7 @@ def discover(scope = None) -> List:
     lst.sort()
     return lst
 
+
 class CameraONVIF:
     """This class is used to get the information from all cameras discovered on this specific
     network."""
@@ -49,120 +50,121 @@ class CameraONVIF:
             user (str): Onvif login.
             password (str): Onvif password.
         """
-        self.cam_ip = ip
-        self.cam_user = user
-        self.cam_password = password
+        self._mycam = ONVIFCamera(ip, 80, user, password, no_cache = True)
+        self._camera_media = self._mycam.create_media_service()
+        self._camera_media_profile = self._camera_media.GetProfiles()[0]
 
-    def camera_start(self):
-        """Start module.
-        """
-        mycam = ONVIFCamera(self.cam_ip, 80, self.cam_user, self.cam_password, no_cache = True)
-        media = mycam.create_media_service()
-        media_profile = media.GetProfiles()[0]
-        self.mycam = mycam
-        self.camera_media = media
-        self.camera_media_profile = media_profile
-    
-    def get_hostname(self) -> str:
+    @property
+    def hostname(self) -> str:
         """Find hostname of camera.
 
         Returns:
             str: Hostname.
         """
-        resp = self.mycam.devicemgmt.GetHostname()
+        resp = self._mycam.devicemgmt.GetHostname()
         return resp.Name
 
-    def get_manufacturer(self) -> str:
+    @property
+    def manufacturer(self) -> str:
         """Find manufacturer of camera.
 
         Returns:
             str: Manufacturer.
         """
-        resp = self.mycam.devicemgmt.GetDeviceInformation()
+        resp = self._mycam.devicemgmt.GetDeviceInformation()
         return resp.Manufacturer
 
-    def get_model(self) -> str:
+    @property
+    def model(self) -> str:
         """Find model of camera.
 
         Returns:
             str: Model.
         """
-        resp = self.mycam.devicemgmt.GetDeviceInformation()
+        resp = self._mycam.devicemgmt.GetDeviceInformation()
         return resp.Model
 
-    def get_firmware_version(self) -> str:
+    @property
+    def firmware_version(self) -> str:
         """Find firmware version of camera.
 
         Returns:
             str: Firmware version.
         """
-        resp = self.mycam.devicemgmt.GetDeviceInformation()
+        resp = self._mycam.devicemgmt.GetDeviceInformation()
         return resp.FirmwareVersion
 
-    def get_mac_address(self) -> str:
+    @property
+    def mac_address(self) -> str:
         """Find serial number of camera.
 
         Returns:
             str: Serial number.
         """
-        resp = self.mycam.devicemgmt.GetDeviceInformation()
+        resp = self._mycam.devicemgmt.GetDeviceInformation()
         return resp.SerialNumber
 
-    def get_hardware_id(self) -> str:
+    @property
+    def hardware_id(self) -> str:
         """Find hardware id of camera.
 
         Returns:
             str: Hardware Id.
         """
-        resp = self.mycam.devicemgmt.GetDeviceInformation()
+        resp = self._mycam.devicemgmt.GetDeviceInformation()
         return resp.HardwareId
 
-    def get_resolutions_available(self) -> List:
+    @property
+    def resolutions_available(self) -> List:
         """Find all resolutions of camera.
 
         Returns:
             tuple: List of resolutions (Width, Height).
         """
-        request = self.camera_media.create_type('GetVideoEncoderConfigurationOptions')
-        request.ProfileToken = self.camera_media_profile.token
-        config = self.camera_media.GetVideoEncoderConfigurationOptions(request)
+        request = self._camera_media.create_type('GetVideoEncoderConfigurationOptions')
+        request.ProfileToken = self._camera_media_profile.token
+        config = self._camera_media.GetVideoEncoderConfigurationOptions(request)
         return [(res.Width, res.Height) for res in config.H264.ResolutionsAvailable]
 
-    def get_frame_rate_range(self) -> int:
+    @property
+    def frame_rate_range(self) -> int:
         """Find the frame rate range of camera.
 
         Returns:
             int: FPS min.
             int: FPS max.
         """
-        request = self.camera_media.create_type('GetVideoEncoderConfigurationOptions')
-        request.ProfileToken = self.camera_media_profile.token
-        config = self.camera_media.GetVideoEncoderConfigurationOptions(request)
+        request = self._camera_media.create_type('GetVideoEncoderConfigurationOptions')
+        request.ProfileToken = self._camera_media_profile.token
+        config = self._camera_media.GetVideoEncoderConfigurationOptions(request)
         return config.H264.FrameRateRange.Min, config.H264.FrameRateRange.Max
 
-    def get_date(self) -> str:
+    @property
+    def date(self) -> str:
         """Find date configured on camera.
 
         Returns:
             str: Date in string.
         """
-        datetime = self.mycam.devicemgmt.GetSystemDateAndTime()
+        datetime = self._mycam.devicemgmt.GetSystemDateAndTime()
         return datetime.UTCDateTime.Date
 
-    def get_time(self) -> str:
+    @property
+    def time(self) -> str:
         """Find local hour configured on camera.
 
         Returns:
             str: Hour in string.
         """
-        datetime = self.mycam.devicemgmt.GetSystemDateAndTime()
+        datetime = self._mycam.devicemgmt.GetSystemDateAndTime()
         return datetime.UTCDateTime.Time
 
+    @property
     def is_ptz(self) -> bool:
         """Check if camera is PTZ or not.
 
         Returns:
             bool: Is PTZ or not.
         """
-        resp = self.mycam.devicemgmt.GetCapabilities()
+        resp = self._mycam.devicemgmt.GetCapabilities()
         return bool(resp.PTZ)

@@ -1,2 +1,4 @@
-name = 'SenseCamDiscovery'
-from sensecam_discovery import SenseCamDiscovery
+__name__ = 'SenseCamDiscovery'
+__version__ = '2.0.0'
+
+from sensecam_discovery.SenseCamDiscovery import CameraONVIF, discover

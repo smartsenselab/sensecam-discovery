@@ -8,11 +8,11 @@ pip install sensecam-discovery
 ## Execution
 To execute the command that discover all cameras:
 ````
-from sensecam_discovery import SenseCamDiscovery
-SenseCamDiscovery.discover()
+import sensecam_discovery
+sensecam_discovery.discover()
 ````
 To execute the comand that shows information about the cameras:
 ````
 from sensecam_discovery import CameraONVIF
-Class = CameraONVIF(camera_ip, user, password)
+camera = CameraONVIF(camera_ip, user, password)
 ````
