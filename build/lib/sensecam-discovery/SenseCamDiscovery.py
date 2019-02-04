@@ -1,7 +1,7 @@
 """This module is used to get the ip and the information related to
 each camera on the same network."""
 
-__version__ = '1.0.11'
+__version__ = '1.0.12'
 
 
 import subprocess
@@ -11,7 +11,7 @@ import WSDiscovery
 from onvif import ONVIFCamera
 
 
-def ws_discovery(scope = None) -> List:
+def discover(scope = None) -> List:
     """Discover cameras on network using onvif discovery.
 
     Returns:

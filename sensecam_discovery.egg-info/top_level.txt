@@ -1,1 +1,1 @@
-sensecam-discovery
+sensecam_discovery

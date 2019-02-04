@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: sensecam-discovery
-Version: 1.0.11
+Version: 1.0.13
 Summary: A package to discover all onvif cameras on your network
 Home-page: https://github.com/smartsenselab/sensecam-discovery
 Author: Ricardo Barbosa Filho (Smart Sense Laboratory)
@@ -16,13 +16,13 @@ Description: # SenseCam Discovery
         ## Execution
         To execute the command that discover all cameras:
         ````
-        from sensecam_discovery import SenseCamDiscovery
-        SenseCamDiscovery.ws_discovery()
+        import sensecam_discovery
+        sensecam_discovery.discover()
         ````
         To execute the comand that shows information about the cameras:
         ````
-        from sensecam_discovery import CameraONVIF
-        Class = CameraONVIF(camera_ip, user, password)
+        from sensecam_discovery import Camera
+        camera = Camera(camera_ip, user, password)
         ````
 Platform: UNKNOWN
 Classifier: Natural Language :: English
