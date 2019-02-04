@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: sensecam-discovery
-Version: 1.0.13
+Version: 2.0.0
 Summary: A package to discover all onvif cameras on your network
 Home-page: https://github.com/smartsenselab/sensecam-discovery
 Author: Ricardo Barbosa Filho (Smart Sense Laboratory)

@@ -1,4 +1,4 @@
-__name__ = 'SenseCamDiscovery'
-__version__ = '2.0.0'
+__name__ = 'sensecam_discovery'
+__version__ = '2.0.1'
 
 from sensecam_discovery.SenseCamDiscovery import Camera, discover
