@@ -1,9 +1,5 @@
 """This module is used to get the ip and the information related to
 each camera on the same network."""
-
-__version__ = '1.0.13'
-
-
 import subprocess
 from typing import List
 
@@ -38,7 +34,7 @@ def discover(scope = None) -> List:
     return lst
 
 
-class CameraONVIF:
+class Camera:
     """This class is used to get the information from all cameras discovered on this specific
     network."""
 

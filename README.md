@@ -13,6 +13,6 @@ sensecam_discovery.discover()
 ````
 To execute the comand that shows information about the cameras:
 ````
-from sensecam_discovery import CameraONVIF
-camera = CameraONVIF(camera_ip, user, password)
+from sensecam_discovery import Camera
+camera = Camera(camera_ip, user, password)
 ````
