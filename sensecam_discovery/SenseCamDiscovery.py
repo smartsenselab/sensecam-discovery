@@ -1,5 +1,6 @@
 """This module is used to get the ip and the information related to
 each camera on the same network."""
+import re
 import subprocess
 from typing import List
 
@@ -24,11 +25,12 @@ def discover(scope = None) -> List:
         get_ip = str(service.getXAddrs())
         get_types = str(service.getTypes())
         for ip_scope in scope.split():
-            result = get_ip.find(ip_scope.split('.')[0] + '.' + ip_scope.split('.')[1])
-            if result > 0 and get_types.find('onvif') > 0:
-                string_result = get_ip[result:result+13]
-                string_result = string_result.split('/')[0]
-                lst.append(string_result)
+            if re.match(r'\d+\.\d+\.\d+\.\d+', ip_scope):
+                result = get_ip.find(ip_scope.split('.')[0] + '.' + ip_scope.split('.')[1])
+                if result > 0 and get_types.find('onvif') > 0:
+                    string_result = get_ip[result:result+13]
+                    string_result = string_result.split('/')[0]
+                    lst.append(string_result)
     wsd.stop()
     lst.sort()
     return lst
