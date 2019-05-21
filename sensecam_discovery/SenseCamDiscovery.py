@@ -15,13 +15,23 @@ def discover(scope = None) -> List:
         List: List of ips found in network.
     """
     lst = list()
-    if(scope == None):
+    # Get the scopes from the IPs returned by the bash command `hostname -I`.
+    if (scope == None):
         cmd = 'hostname -I'
-        scope = subprocess.check_output(cmd, shell=True).decode('utf-8')
+        return_string = subprocess.check_output(cmd, shell=True).decode('utf-8')
+        ips = return_string.split()
+        scope = ['.'.join(ip.split('.')[:2]) for ip in ips]
+    # Run WSDiscovery to search the IP from the cameras.
     wsd = WSDiscovery.WSDiscovery()
     wsd.start()
     ret = wsd.searchServices()
+    # Extract the IPs.
+    urls = [ip for s in ret for ip in s.getXAddrs()]
+    ips = [ip for url in urls for ip in re.findall(r'\d+\.\d+\.\d+\.\d+', url)]
     for service in ret:
+        for ip in service.getXAddrs():
+            re.match(r'\d+\.\d+\.\d+\.\d+', ip)
+            lst.append(ip)
         get_ip = str(service.getXAddrs())
         get_types = str(service.getTypes())
         for ip_scope in scope.split():
@@ -166,3 +176,7 @@ class Camera:
         """
         resp = self._mycam.devicemgmt.GetCapabilities()
         return bool(resp.PTZ)
+
+
+if __name__ == '__main__':
+    discover()
