@@ -14,7 +14,6 @@ def discover(scope = None) -> List:
     Returns:
         List: List of ips found in network.
     """
-    lst = list()
     # Get the scopes from the IPs returned by the bash command `hostname -I`.
     if (scope == None):
         cmd = 'hostname -I'
@@ -25,25 +24,15 @@ def discover(scope = None) -> List:
     wsd = WSDiscovery.WSDiscovery()
     wsd.start()
     ret = wsd.searchServices()
-    # Extract the IPs.
-    urls = [ip for s in ret for ip in s.getXAddrs()]
-    ips = [ip for url in urls for ip in re.findall(r'\d+\.\d+\.\d+\.\d+', url)]
-    for service in ret:
-        for ip in service.getXAddrs():
-            re.match(r'\d+\.\d+\.\d+\.\d+', ip)
-            lst.append(ip)
-        get_ip = str(service.getXAddrs())
-        get_types = str(service.getTypes())
-        for ip_scope in scope.split():
-            if re.match(r'\d+\.\d+\.\d+\.\d+', ip_scope):
-                result = get_ip.find(ip_scope.split('.')[0] + '.' + ip_scope.split('.')[1])
-                if result > 0 and get_types.find('onvif') > 0:
-                    string_result = get_ip[result:result+13]
-                    string_result = string_result.split('/')[0]
-                    lst.append(string_result)
     wsd.stop()
-    lst.sort()
-    return lst
+    # Get just the services from onvif cameras.
+    onvif_services = [s for s in ret if str(s.getTypes()).find('onvif') >= 0]
+    # Extract the IPs of the onvif cameras.
+    urls = [ip for s in onvif_services for ip in s.getXAddrs()]
+    ips = [ip for url in urls for ip in re.findall(r'\d+\.\d+\.\d+\.\d+', url)]
+    # Return a list with the IPs that correspond to the scope.
+    lst = [ip for ip in ips if any(ip.startswith(sp) for sp in scope)]
+    return sorted(lst)
 
 
 class Camera:
@@ -176,7 +165,3 @@ class Camera:
         """
         resp = self._mycam.devicemgmt.GetCapabilities()
         return bool(resp.PTZ)
-
-
-if __name__ == '__main__':
-    discover()
