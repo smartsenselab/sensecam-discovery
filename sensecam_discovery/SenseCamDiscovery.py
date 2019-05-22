@@ -16,9 +16,8 @@ def discover(scope = None) -> List:
     """
     # Get the scopes from the IPs returned by the bash command `hostname -I`.
     if (scope == None):
-        cmd = 'hostname -I'
-        return_string = subprocess.check_output(cmd, shell=True).decode('utf-8')
-        ips = return_string.split()
+        out = subprocess.check_output('hostname -I', shell=True).decode('utf-8')
+        ips = out.split()
         scope = ['.'.join(ip.split('.')[:2]) for ip in ips]
     # Run WSDiscovery to search the IP from the cameras.
     wsd = WSDiscovery.WSDiscovery()
