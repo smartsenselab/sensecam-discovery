@@ -1,12 +1,27 @@
 """This module is used to get the ip and the information related to
 each camera on the same network."""
 import re
-import subprocess
+# import subprocess
 from typing import List
 
-import WSDiscovery
+# import WSDiscovery
+from wsdiscovery.discovery import ThreadedWSDiscovery as WSDiscovery
 from onvif import ONVIFCamera
 
+from netifaces import interfaces, ifaddresses, AF_INET
+import netifaces
+
+def ip4_addresses():
+    """Discover host's IPv4 addresses.
+
+    Returns:
+        List: List of IPv4 addresses found in host's network interface.
+    """
+    ip_list = list()
+    for iface in interfaces():
+        for link in ifaddresses(iface)[AF_INET]:
+            ip_list.append(link['addr'])
+    return ip_list
 
 def discover(scope = None) -> List:
     """Discover cameras on network using onvif discovery.
@@ -16,11 +31,10 @@ def discover(scope = None) -> List:
     """
     # Get the scopes from the IPs returned by the bash command `hostname -I`.
     if (scope == None):
-        out = subprocess.check_output('hostname -I', shell=True).decode('utf-8')
-        ips = out.split()
+        ips = ip4_addresses()
         scope = ['.'.join(ip.split('.')[:2]) for ip in ips]
     # Run WSDiscovery to search the IP from the cameras.
-    wsd = WSDiscovery.WSDiscovery()
+    wsd = WSDiscovery()
     wsd.start()
     ret = wsd.searchServices()
     wsd.stop()
