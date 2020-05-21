@@ -4,7 +4,6 @@ import re
 import netifaces
 from typing import List
 
-# import WSDiscovery
 from wsdiscovery.discovery import ThreadedWSDiscovery as WSDiscovery
 from onvif import ONVIFCamera
 
