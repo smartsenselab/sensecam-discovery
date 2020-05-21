@@ -1,13 +1,15 @@
 Metadata-Version: 2.1
 Name: sensecam-discovery
-Version: 2.0.2
+Version: 2.1.0
 Summary: A package to discover all onvif cameras on your network
 Home-page: https://github.com/smartsenselab/sensecam-discovery
 Author: Ricardo Barbosa Filho (Smart Sense Laboratory)
 Author-email: ricardob@dcc.ufmg.br
 License: UNKNOWN
-Description: # SenseCam Discovery
-        This is a package to discover all onvif devices on your network.
+Description: # SenseCam Discovery - Camera Discovery Package
+        
+        SenseCam Discovery is a Python tool that is used to discover all Onvif cameras available on a specific network. The purpose is to easily provide an accessible way to find out which IP each camera has, and then use this IP to get all information for this camera, such as hostname, manufacturer, model, firmware version, MAC address, hardware ID, all resolutions available, frame rate range, date, time and if it’s PTZ or not.
+        
         ## Installation
         Install the package through pip:
         ````

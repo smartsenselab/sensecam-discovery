@@ -2,7 +2,7 @@ import setuptools
 
 REQUIREMENTS = [line for line in open('requirements.txt').read().split('\n') if line != '']
 
-VERSION = '2.1.0'
+VERSION = '2.1.1'
 AUTHOR = 'Ricardo Barbosa Filho (Smart Sense Laboratory)'
 EMAIL = 'ricardob@dcc.ufmg.br'
 
@@ -20,7 +20,9 @@ setuptools.setup(
         'Natural Language :: English',
         "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License",
-        'Operating System :: POSIX :: Linux',
+        'Operating System :: OS Independent',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
     ],
     python_requires='>=3.6',
     install_requires=REQUIREMENTS,
