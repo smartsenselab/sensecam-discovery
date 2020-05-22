@@ -1,3 +1,0 @@
-onvif-zeep==0.2.12
-WSDiscovery==2.0.0
-netifaces==0.10.9
