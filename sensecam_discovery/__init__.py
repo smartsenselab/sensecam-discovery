@@ -1,4 +1,5 @@
 __name__ = 'sensecam_discovery'
-__version__ = '2.1.6'
+__version__ = '2.2.0'
 
-from sensecam_discovery.SenseCamDiscovery import Camera, discover
+from sensecam_discovery.Discover import discover
+from sensecam_discovery.Camera import Camera, CameraError
